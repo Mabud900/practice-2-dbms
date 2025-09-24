@@ -1,0 +1,46 @@
+db.createCollection("employees");
+db.employees.find({});
+db.employees.deleteMany({});
+
+
+db.employees.insertMany([
+  {
+    _id: 1,
+    name: "Md mabud",
+    email: "mdmabud.mail56@gmail.com"
+  },
+  {
+    _id: 2,
+    name: "Md Rehan",
+    email: "mdRehan123@gmail.com"
+  }
+]);
+db.employees.find({});
+db.employees.find({}, { _id: 1, name: "Md mabud" })
+db.createCollection("projects");
+
+db.projects.insertMany([
+  { _id: 1, projectName: "Recruitment System" },
+  { _id: 2, projectName: "Employee Portal" },
+  { _id: 3, projectName: "Payment Gateway" },
+  { _id: 4, projectName: "Chat Application" }
+]);
+
+db.projects.find({});
+
+db.createCollection("employeeProjects");
+
+db.employeeProjects.insertMany([
+  { employeeId: 1, projectId: 1 }, 
+  { employeeId: 1, projectId: 3 }, 
+  { employeeId: 2, projectId: 2 }, 
+  { employeeId: 2, projectId: 3 }, 
+  { employeeId: 2, projectId: 4 }  
+]);
+db.leaves.drop();
+db.employees.createIndex({_id: 1, name: "Md mabud"});
+db.projects.createIndex({ projectId: 2 }, { name: "Employee Portal" });
+db.employees.find(
+  { name: "Md mabud" },
+  { _id: 2, name: "Employee Portal", projects: 1 }
+).explain("executionStats")
